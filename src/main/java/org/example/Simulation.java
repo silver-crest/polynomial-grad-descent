@@ -23,6 +23,13 @@ public class Simulation extends PApplet {
     @Override
     public void draw() {
         background(255);
+        fill(0);
+        text(String.format("a = %.2f\nb = %.2f\nc = %.2f",
+                polynomial.getCoeff(2),
+                polynomial.getCoeff(1),
+                polynomial.getCoeff(0)),
+                20,20
+        );
         pushMatrix();
         translate(width / 2, height / 2);
         scale(40, -40);
@@ -46,16 +53,17 @@ public class Simulation extends PApplet {
 
         popMatrix();
 
-        polynomial.gradientDescent(input);
+        for (int i = 0; i < 100; i++)
+            polynomial.gradientDescent(input);
     }
 
-    private final float a = 0.2f, b = -1, c = -3;
+    private final float a = 0.5f, b = -2, c = -5;
 
     public ArrayList<PVector> genRandomPoints(int n) {
         var points = new ArrayList<PVector>();
         for (int i = 0; i < n; i++) {
             float x = random(-10, 10);
-            float noise = random(-0.5f, 0.5f);
+            float noise = random(-1.5f, 1.5f);
             points.add(new PVector(x, a*x*x + b*x + c + noise));
         }
         return points;
