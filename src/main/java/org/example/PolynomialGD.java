@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class PolynomialGD {
-    public static final float LEARNING_RATE = 0.001f;
-    public static final float DELTA = 0.001f;
+    public static final float LEARNING_RATE = 0.0001f;
+    public static final float DELTA = 0.01f;
 
     private final int degree;
     private final ArrayList<Float> coefficients;
@@ -36,7 +36,9 @@ public class PolynomialGD {
         for (int d = 0; d <= degree; d++) {
             var copy = new PolynomialGD(this);
             copy.offsetCoeff(d, DELTA);
-            gradient.add(copy.getCost(points));
+            gradient.add(
+                    (copy.getCost(points) - getCost(points)) / DELTA
+            );
         }
         return gradient;
     }
@@ -45,13 +47,13 @@ public class PolynomialGD {
         float cost = 0;
         for (PVector p : points)
             cost += (float) Math.pow(eval(p) - p.y, 2);
-        return cost;
+        return cost / points.size();
     }
 
     public float eval(float x) {
         float result = 0;
         for (int d = 0; d <= degree; d++)
-            result += getCoeff(d) * Math.pow(x, degree);
+            result += getCoeff(d) * Math.pow(x, d);
         return result;
     }
 

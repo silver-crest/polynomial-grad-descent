@@ -23,7 +23,6 @@ public class Simulation extends PApplet {
     @Override
     public void draw() {
         background(255);
-        frameRate(10);
         pushMatrix();
         translate(width / 2, height / 2);
         scale(40, -40);
