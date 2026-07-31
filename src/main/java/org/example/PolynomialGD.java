@@ -37,6 +37,18 @@ public class PolynomialGD {
         }
     }
 
+    public void sgd(ArrayList<PVector> points, int batchSize) {
+        var shuffledPoints = new ArrayList<>(points);
+        Collections.shuffle(shuffledPoints);
+        var newPoints = new ArrayList<PVector>();
+
+        for (int i = 0; i < batchSize; i++) {
+            newPoints.add(points.get(i));
+        }
+
+        gradientDescent(newPoints);
+    }
+
     public ArrayList<Float> getGradient(ArrayList<PVector> points) {
         var gradient = new ArrayList<Float>();
         for (int d = 0; d <= degree; d++) {
