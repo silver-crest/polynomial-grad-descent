@@ -38,13 +38,10 @@ public class Simulation extends PApplet {
         strokeWeight(2f/40);
         PVector lastPt = null;
         for (float x = -10; x <= 10; x += 0.1f) {
-            if (lastPt == null) {
-                lastPt = new PVector(x, polynomial.eval(x));
-                continue;
-            }
-
             PVector currentPt = new PVector(x, polynomial.eval(x));
-            line(lastPt.x, lastPt.y, currentPt.x, currentPt.y);
+            if (lastPt != null) {
+                line(lastPt.x, lastPt.y, currentPt.x, currentPt.y);
+            }
             lastPt = currentPt;
         }
 
