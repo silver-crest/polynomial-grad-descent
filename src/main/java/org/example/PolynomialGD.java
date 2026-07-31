@@ -18,6 +18,12 @@ public class PolynomialGD {
         coefficients = new ArrayList<>(Collections.nCopies(degree + 1, 0f));
     }
 
+    public PolynomialGD(List<Float> coefficients) {
+        this(coefficients.size());
+        for (int i = 0; i < coefficients.size(); i++)
+            updateCoeff(i, coefficients.get(i));
+    }
+
     // Copy constructor
     public PolynomialGD(PolynomialGD p) {
         degree = p.degree;

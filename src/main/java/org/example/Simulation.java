@@ -22,8 +22,7 @@ public class Simulation extends PApplet {
     public void setup() {
         polynomial = new PolynomialGD(DEGREE);
 
-        target = new PolynomialGD(DEGREE);
-        target.setCoefficients(List.of(-0.5f, 0.5f, 0.125f, -0.0625f));
+        target = new PolynomialGD(List.of(-0.5f, 0.5f, 0.125f, -0.0625f));
 
         input = genRandomPoints(100);
     }
