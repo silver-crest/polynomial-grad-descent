@@ -1,5 +1,6 @@
 package org.example;
 
+import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class PolynomialGD {
 
     public PolynomialGD(int degree) {
         this.degree = degree;
-        coefficients = new ArrayList<>(Collections.nCopies(degree + 1, 0f));
+        coefficients =
     }
 
     public PolynomialGD(List<Float> coefficients) {
@@ -64,14 +65,14 @@ public class PolynomialGD {
     public float getCost(ArrayList<PVector> points) {
         float cost = 0;
         for (PVector p : points)
-            cost += (float) Math.pow(eval(p) - p.y, 2);
+            cost += PApplet.pow(eval(p) - p.y, 2);
         return cost / points.size();
     }
 
     public float eval(float x) {
         float result = 0;
         for (int d = 0; d <= degree; d++)
-            result += (float) (getCoeff(d) * Math.pow(x, d));
+            result += getCoeff(d) * PApplet.pow(x, d);
         return result;
     }
 
