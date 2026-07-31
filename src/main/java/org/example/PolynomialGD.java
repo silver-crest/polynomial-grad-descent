@@ -7,8 +7,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class PolynomialGD {
-    public static final float LEARNING_RATE = 0.0001f;
-    public static final float DELTA = 0.01f;
+    public static final float LEARNING_RATE = 0.000001f;
+    public static final float DELTA = 0.001f;
 
     private final int degree;
     private final ArrayList<Float> coefficients;
@@ -53,7 +53,7 @@ public class PolynomialGD {
     public float eval(float x) {
         float result = 0;
         for (int d = 0; d <= degree; d++)
-            result += getCoeff(d) * Math.pow(x, d);
+            result += (float) (getCoeff(d) * Math.pow(x, d));
         return result;
     }
 
