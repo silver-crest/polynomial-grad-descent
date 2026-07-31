@@ -25,14 +25,39 @@ public class PolynomialGD {
     }
 
     public void gradientDescent(ArrayList<PVector> points) {
-
+        var gradient = getGradient(points);
+        for (int d = 0; d <= degree; d++) {
+            offsetCoeff(d, -LEARNING_RATE * gradient.get(d));
+        }
     }
 
-    public ArrayList<Double> getGradient() {
+    public ArrayList<Double> getGradient(ArrayList<PVector> points) {
+        var gradient = new ArrayList<Double>();
         for (int d = 0; d <= degree; d++) {
             var copy = new PolynomialGD(this);
-            copy.
+            copy.offsetCoeff(d, DELTA);
+            gradient.add(copy.getCost(points));
         }
+        return gradient;
+    }
+
+    public double getCost(ArrayList<PVector> points) {
+        double cost = 0;
+        for (PVector p : points)
+            cost += Math.pow(eval(p) - p.y, 2);
+        return cost;
+    }
+
+    public double eval(double x) {
+        double result = 0;
+        for (int d = 0; d <= degree; d++)
+            result += getCoeff(d) * Math.pow(x, degree);
+        return result;
+    }
+
+    // Only uses point.x
+    public double eval(PVector p) {
+        return eval(p.x);
     }
 
     public int getDegree() {
