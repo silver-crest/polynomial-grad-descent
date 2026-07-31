@@ -1,22 +1,31 @@
 package org.example;
 
-import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+
+import static processing.core.PApplet.*;
 
 public class PolynomialGD {
     public static final float LEARNING_RATE = 0.000001f;
     public static final float DELTA = 0.001f;
 
     private final int degree;
-    private final ArrayList<Float> coefficients;
+    private ArrayList<Float> coefficients;
 
     public PolynomialGD(int degree) {
         this.degree = degree;
-        coefficients =
+        initRandomCoeffs();
+    }
+
+    public void initRandomCoeffs() {
+        coefficients = (new Random()).doubles(degree)
+                .mapToObj(d -> (float) d)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public PolynomialGD(List<Float> coefficients) {
@@ -65,14 +74,14 @@ public class PolynomialGD {
     public float getCost(ArrayList<PVector> points) {
         float cost = 0;
         for (PVector p : points)
-            cost += PApplet.pow(eval(p) - p.y, 2);
+            cost += pow(eval(p) - p.y, 2);
         return cost / points.size();
     }
 
     public float eval(float x) {
         float result = 0;
         for (int d = 0; d <= degree; d++)
-            result += getCoeff(d) * PApplet.pow(x, d);
+            result += getCoeff(d) * pow(x, d);
         return result;
     }
 
