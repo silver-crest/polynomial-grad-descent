@@ -4,10 +4,14 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Simulation extends PApplet {
     private ArrayList<PVector> input;
     private PolynomialGD polynomial;
+    private PolynomialGD target;
+
+    private final int DEGREE = 3;
 
     @Override
     public void settings() {
@@ -16,20 +20,20 @@ public class Simulation extends PApplet {
 
     @Override
     public void setup() {
+        polynomial = new PolynomialGD(DEGREE);
+
+        target = new PolynomialGD(DEGREE);
+        target.setCoefficients(List.of(-1f, 1f, 0.25f, -0.125f));
+
         input = genRandomPoints(100);
-        polynomial = new PolynomialGD(2);
     }
 
     @Override
     public void draw() {
         background(255);
         fill(0);
-        text(String.format("a = %.2f\nb = %.2f\nc = %.2f",
-                polynomial.getCoeff(2),
-                polynomial.getCoeff(1),
-                polynomial.getCoeff(0)),
-                20,20
-        );
+        displayCoeffs(polynomial, 20, 20);
+
         pushMatrix();
         translate(width / 2, height / 2);
         scale(40, -40);
@@ -57,14 +61,23 @@ public class Simulation extends PApplet {
             polynomial.gradientDescent(input);
     }
 
-    private final float a = 0.5f, b = -2, c = -5;
+    public void displayCoeffs(PolynomialGD polynomial, int x, int y) {
+        StringBuilder dis = new StringBuilder();
+        ArrayList<Float> coefficients = polynomial.getCoefficients();
+
+        for (int i = 0; i < coefficients.size(); i++) {
+            double coeff = coefficients.get(i);
+            dis.append(String.format("%c = %.2f\n", 'a' + i, coeff));
+        }
+        text(dis.toString(), x, y);
+    }
 
     public ArrayList<PVector> genRandomPoints(int n) {
         var points = new ArrayList<PVector>();
         for (int i = 0; i < n; i++) {
             float x = random(-10, 10);
-            float noise = random(-1.5f, 1.5f);
-            points.add(new PVector(x, a*x*x + b*x + c + noise));
+            float noise = random(-0.7f, 0.7f);
+            points.add(new PVector(x, target.eval(x) + noise));
         }
         return points;
     }
