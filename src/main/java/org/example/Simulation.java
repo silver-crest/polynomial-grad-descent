@@ -35,20 +35,22 @@ public class Simulation extends PApplet {
         textSize(20);
 
         displayCoeffs(polynomial, 20, 20);
+        text(String.format("Cost = %.2f", polynomial.getCost(input)), 600, 20);
         fill(0, 155, 0);
         displayCoeffs(target, 20, 120);
+        text(String.format("Cost = %.2f", target.getCost(input)), 600, 120);
 
         pushMatrix();
         translate(width / 2, height / 2);
         scale(40, -40);
 
+        stroke(0);
+        strokeWeight(1.5f/40);
+        fill(255, 0 , 0);
         for (PVector p : input) {
-            noStroke();
-            fill(255, 0 , 0);
             circle(p.x, p.y, 10f/40);
         }
 
-        stroke(0);
         strokeWeight(2f/40);
         drawPolynomial(polynomial);
         stroke(0, 155, 0);
@@ -56,7 +58,7 @@ public class Simulation extends PApplet {
 
         popMatrix();
 
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < 10_000; i++)
             polynomial.gradientDescent(input);
     }
 
