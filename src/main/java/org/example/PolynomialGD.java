@@ -4,10 +4,11 @@ import processing.core.PVector;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class PolynomialGD {
-    public static final float LEARNING_RATE = 0.0004f;
-    public static final float DELTA = 0.0001f;
+    public static final float LEARNING_RATE = 0.0001f;
+    public static final float DELTA = 0.01f;
 
     private final int degree;
     private final ArrayList<Float> coefficients;
@@ -15,7 +16,6 @@ public class PolynomialGD {
     public PolynomialGD(int degree) {
         this.degree = degree;
         coefficients = new ArrayList<>(Collections.nCopies(degree + 1, 0f));
-        IO.println(coefficients);
     }
 
     // Copy constructor
@@ -68,6 +68,19 @@ public class PolynomialGD {
 
     public float getCoeff(int degree) {
         return coefficients.get(degree);
+    }
+
+    public ArrayList<Float> getCoefficients() {
+        return coefficients;
+    }
+
+    public void setCoefficients(List<Float> coefficients) {
+        if (coefficients.size() != this.coefficients.size())
+            throw new RuntimeException("coefficients size mismatch");
+
+        for (int i = 0; i < this.coefficients.size(); i++) {
+            updateCoeff(i, coefficients.get(i));
+        }
     }
 
     public void updateCoeff(int degree, float newCoeff) {
