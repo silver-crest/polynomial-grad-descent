@@ -58,7 +58,7 @@ public class Simulation extends PApplet {
         popMatrix();
 
         for (int i = 0; i < 10_000; i++)
-            polynomial.gradientDescent(input);
+            polynomial.sgd(input, 10);
     }
 
     public void displayCoeffs(PolynomialGD polynomial, int x, int y) {
@@ -87,7 +87,7 @@ public class Simulation extends PApplet {
         var points = new ArrayList<PVector>();
         for (int i = 0; i < n; i++) {
             float x = random(-10, 10);
-            float noise = random(-0.7f, 0.7f);
+            float noise = random(-0.25f, 0.25f);
             points.add(new PVector(x, target.eval(x) + noise));
         }
         return points;
