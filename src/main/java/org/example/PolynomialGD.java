@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class PolynomialGD {
-    public static final float LEARNING_RATE = 0.0001f;
-    public static final float DELTA = 0.01f;
+    public static final float LEARNING_RATE = 0.0004f;
+    public static final float DELTA = 0.0001f;
 
     private final int degree;
     private final ArrayList<Float> coefficients;

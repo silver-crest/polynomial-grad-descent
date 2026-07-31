@@ -49,13 +49,13 @@ public class Simulation extends PApplet {
         polynomial.gradientDescent(input);
     }
 
-    private final float a = 0.2f, b = -1, c = -5;
+    private final float a = 0.2f, b = -1, c = -3;
 
     public ArrayList<PVector> genRandomPoints(int n) {
         var points = new ArrayList<PVector>();
         for (int i = 0; i < n; i++) {
             float x = random(-10, 10);
-            float noise = random(-1.5f, 1.5f);
+            float noise = random(-0.5f, 0.5f);
             points.add(new PVector(x, a*x*x + b*x + c + noise));
         }
         return points;
