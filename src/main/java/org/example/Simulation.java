@@ -23,7 +23,7 @@ public class Simulation extends PApplet {
         polynomial = new PolynomialGD(DEGREE);
 
         target = new PolynomialGD(DEGREE);
-        target.setCoefficients(List.of(-1f, 1f, 0.25f, -0.125f));
+        target.setCoefficients(List.of(-0.5f, 0.5f, 0.125f, -0.0625f));
 
         input = genRandomPoints(100);
     }
@@ -32,7 +32,11 @@ public class Simulation extends PApplet {
     public void draw() {
         background(255);
         fill(0);
+        textSize(20);
+
         displayCoeffs(polynomial, 20, 20);
+        fill(0, 155, 0);
+        displayCoeffs(target, 20, 120);
 
         pushMatrix();
         translate(width / 2, height / 2);
@@ -46,6 +50,28 @@ public class Simulation extends PApplet {
 
         stroke(0);
         strokeWeight(2f/40);
+        drawPolynomial(polynomial);
+        stroke(0, 155, 0);
+        drawPolynomial(target);
+
+        popMatrix();
+
+        for (int i = 0; i < 1000; i++)
+            polynomial.gradientDescent(input);
+    }
+
+    public void displayCoeffs(PolynomialGD polynomial, int x, int y) {
+        StringBuilder dis = new StringBuilder();
+        ArrayList<Float> coefficients = polynomial.getCoefficients();
+
+        for (int i = 0; i <= polynomial.getDegree(); i++) {
+            double coeff = coefficients.get(i);
+            dis.append(String.format("a_%d = %.2f\n", i, coeff));
+        }
+        text(dis.toString(), x, y);
+    }
+
+    public void drawPolynomial(PolynomialGD polynomial) {
         PVector lastPt = null;
         for (float x = -10; x <= 10; x += 0.1f) {
             PVector currentPt = new PVector(x, polynomial.eval(x));
@@ -54,22 +80,6 @@ public class Simulation extends PApplet {
             }
             lastPt = currentPt;
         }
-
-        popMatrix();
-
-        for (int i = 0; i < 100; i++)
-            polynomial.gradientDescent(input);
-    }
-
-    public void displayCoeffs(PolynomialGD polynomial, int x, int y) {
-        StringBuilder dis = new StringBuilder();
-        ArrayList<Float> coefficients = polynomial.getCoefficients();
-
-        for (int i = 0; i < coefficients.size(); i++) {
-            double coeff = coefficients.get(i);
-            dis.append(String.format("%c = %.2f\n", 'a' + i, coeff));
-        }
-        text(dis.toString(), x, y);
     }
 
     public ArrayList<PVector> genRandomPoints(int n) {
