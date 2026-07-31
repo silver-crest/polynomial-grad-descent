@@ -14,8 +14,8 @@ public class PolynomialGD {
 
     public PolynomialGD(int degree) {
         this.degree = degree;
-        coefficients = new ArrayList<>(degree);
-        Collections.fill(coefficients, 0f);
+        coefficients = new ArrayList<>(Collections.nCopies(degree + 1, 0f));
+        IO.println(coefficients);
     }
 
     // Copy constructor
