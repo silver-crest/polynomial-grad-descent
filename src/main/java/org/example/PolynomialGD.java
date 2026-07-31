@@ -102,15 +102,6 @@ public class PolynomialGD {
         return coefficients;
     }
 
-    public void setCoefficients(List<Float> coefficients) {
-        if (coefficients.size() != this.coefficients.size())
-            throw new RuntimeException("coefficients size mismatch");
-
-        for (int i = 0; i < this.coefficients.size(); i++) {
-            updateCoeff(i, coefficients.get(i));
-        }
-    }
-
     public void updateCoeff(int degree, float newCoeff) {
         coefficients.set(degree, newCoeff);
     }
