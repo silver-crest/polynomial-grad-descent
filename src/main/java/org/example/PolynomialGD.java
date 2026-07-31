@@ -19,7 +19,7 @@ public class PolynomialGD {
     }
 
     public PolynomialGD(List<Float> coefficients) {
-        this(coefficients.size());
+        this(coefficients.size() - 1);
         for (int i = 0; i < coefficients.size(); i++)
             updateCoeff(i, coefficients.get(i));
     }
