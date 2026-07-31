@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class PolynomialGD {
-    public static final double LEARNING_RATE = 0.001;
-    public static final double DELTA = 0.001;
+    public static final float LEARNING_RATE = 0.001f;
+    public static final float DELTA = 0.001f;
 
     private final int degree;
-    private final ArrayList<Double> coefficients;
+    private final ArrayList<Float> coefficients;
 
     public PolynomialGD(int degree) {
         this.degree = degree;
         coefficients = new ArrayList<>(degree);
-        Collections.fill(coefficients, 0.0);
+        Collections.fill(coefficients, 0f);
     }
 
     // Copy constructor
@@ -31,8 +31,8 @@ public class PolynomialGD {
         }
     }
 
-    public ArrayList<Double> getGradient(ArrayList<PVector> points) {
-        var gradient = new ArrayList<Double>();
+    public ArrayList<Float> getGradient(ArrayList<PVector> points) {
+        var gradient = new ArrayList<Float>();
         for (int d = 0; d <= degree; d++) {
             var copy = new PolynomialGD(this);
             copy.offsetCoeff(d, DELTA);
@@ -41,22 +41,22 @@ public class PolynomialGD {
         return gradient;
     }
 
-    public double getCost(ArrayList<PVector> points) {
-        double cost = 0;
+    public float getCost(ArrayList<PVector> points) {
+        float cost = 0;
         for (PVector p : points)
-            cost += Math.pow(eval(p) - p.y, 2);
+            cost += (float) Math.pow(eval(p) - p.y, 2);
         return cost;
     }
 
-    public double eval(double x) {
-        double result = 0;
+    public float eval(float x) {
+        float result = 0;
         for (int d = 0; d <= degree; d++)
             result += getCoeff(d) * Math.pow(x, degree);
         return result;
     }
 
     // Only uses point.x
-    public double eval(PVector p) {
+    public float eval(PVector p) {
         return eval(p.x);
     }
 
@@ -64,15 +64,15 @@ public class PolynomialGD {
         return degree;
     }
 
-    public double getCoeff(int degree) {
+    public float getCoeff(int degree) {
         return coefficients.get(degree);
     }
 
-    public void updateCoeff(int degree, double newCoeff) {
+    public void updateCoeff(int degree, float newCoeff) {
         coefficients.set(degree, newCoeff);
     }
 
-    public void offsetCoeff(int degree, double offset) {
+    public void offsetCoeff(int degree, float offset) {
         updateCoeff(degree, getCoeff(degree) + offset);
     }
 
