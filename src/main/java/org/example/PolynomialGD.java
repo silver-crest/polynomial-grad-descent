@@ -23,7 +23,7 @@ public class PolynomialGD {
     }
 
     public void initRandomCoeffs() {
-        coefficients = (new Random()).doubles(degree)
+        coefficients = (new Random()).doubles(degree + 1)
                 .mapToObj(d -> (float) d)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
