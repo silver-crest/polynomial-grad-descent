@@ -53,7 +53,7 @@ public class PolynomialGD {
         var newPoints = new ArrayList<PVector>();
 
         for (int i = 0; i < batchSize; i++) {
-            newPoints.add(points.get(i));
+            newPoints.add(shuffledPoints.get(i));
         }
 
         gradientDescent(newPoints);
